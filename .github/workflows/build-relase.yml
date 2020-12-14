@@ -20,21 +20,3 @@ jobs:
             with:
               name: prestashopConsole.phar
               path: bin/phar/prestashopConsole.phar
-  update_release_draft:
-    runs-on: ubuntu-latest
-    needs: [ deploy ]
-    if: github.event_name == 'push'
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: prestashopConsole.phar
-      - name: Publish to GitHub Release
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.release_info.outputs.upload_url }}
-          asset_path: ./prestashopConsole.phar
-          asset_name: prestashopConsole.phar
-          asset_content_type: application/zip
